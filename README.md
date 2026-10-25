@@ -168,7 +168,7 @@ Then exercise the relevant scenarios in [evals/scenarios.md](evals/scenarios.md)
 
 Repository policy files guide cooperating agents. Actual enforcement requires active GitHub branch protection or rulesets. The proposed configuration and its limitations are documented in **[Repository protection](docs/repository-protection.md)**. This README does not claim that a checked-in policy file activates server-side protection.
 
-**The sole required reviewer and code owner is `@HHC225`.** The proposed rules require that owner's approval; another review cannot replace it. GitHub does not allow self-approval, so an agent using the owner's account cannot open a PR that the same account then approves. Future agent contributions need a separately authorized contributor identity, while the owner remains the only required reviewer.
+**`@HHC225` is the sole code owner and required reviewer for other contributors' PRs.** Another person's review cannot replace the owner's approval. Only `@HHC225` has the personal bypass permission to merge a PR without review, including their own PRs. The bypass covers the whole ruleset, including required checks at PR merge, but does not apply to direct pushes. An agent using the owner's account shares that technical permission and must still obtain the owner's explicit instruction for the specific bypass or merge action.
 
 ## Limits
 
