@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITWYW"
+  short_description: "Find the name for the feature you have in mind"
+  default_prompt: "Use $itwyw to name the feature I describe and check whether it matches what I want."
