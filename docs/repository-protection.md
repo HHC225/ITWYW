@@ -6,9 +6,9 @@
 
 The `Validate ITWYW` workflow runs the offline structure checks. A passing workflow is not permission for an agent to merge.
 
-## Proposed GitHub ruleset
+## GitHub ruleset configuration
 
-The importable configuration is [main.json](../.github/rulesets/main.json). Its intended behavior is:
+The importable configuration is [main.json](../.github/rulesets/main.json). Its behavior is:
 
 | Rule | Result |
 | --- | --- |
@@ -18,7 +18,8 @@ The importable configuration is [main.json](../.github/rulesets/main.json). Its 
 | Dismiss stale approvals | A changed diff needs fresh review. |
 | Approval of the latest reviewable push | The last pusher cannot be the only person approving the latest change. |
 | Resolve review discussions | Unresolved review threads block merging. |
-| Required `validate` check | The structural validation job must pass. |
+| Required `validate` check from GitHub Actions | The structural validation job must pass; a same-named status from another source does not replace it. |
+| No extra approval for unattributed Copilot PRs | Preserve the one-owner approval process instead of adding a second required approval. This does not enable automatic Copilot reviews. |
 | Branch up to date | Required checks must apply to an up-to-date branch. |
 | No force pushes or deletion | Protect published branch history and the branch itself. |
 | Empty bypass list | No actor is deliberately exempted in this ruleset. |
@@ -46,11 +47,15 @@ gh api --method POST repos/HHC225/ITWYW/rulesets \
 
 Before running the command, inspect existing rules and update the matching rule instead of creating duplicates. Keep auto-merge disabled in repository settings. Review the resulting active ruleset and confirm the actual target, review count, bypass list, and check name. A checked-in JSON file or a successful upload is not evidence that the rule is active.
 
-## Initial setup status
+## Setup verification
 
 At the initial inspection on 2026-10-25, the repository was empty, `allow_auto_merge` was `false`, and the repository ruleset list was empty. The connected GitHub tool allowed content/commit operations but exposed no repository-administration write operation. The settings page required a separate browser sign-in.
 
-The importable configuration is prepared for activation. **Do not infer live enforcement from this document.** Confirm live GitHub settings before asserting that a merge is blocked by server-side rules.
+After browser sign-in on 2026-10-25, ruleset [25819387](https://github.com/HHC225/ITWYW/rules/25819387) was created and verified through the GitHub API: enforcement was `active`, the default branch was targeted, the bypass list was empty, and the current connected user could never bypass the rule. `main` reported `protected: true`; repository auto-merge remained disabled. Required code-owner review, one approval, latest-push approval, stale-approval dismissal, resolved conversations, and the GitHub Actions `validate` check were present. The additional-approval option for unattributed Copilot PRs was explicitly off so it could not introduce another required reviewer.
+
+This is a dated observation. **Do not infer current enforcement from a checked-in file.** Confirm live GitHub settings before asserting that a merge is blocked by server-side rules. Subsequent documentation updates are prepared on a separate branch for owner review, without bypassing this rule.
+
+At the owner's request, unused repository features were also disabled: Wikis and Projects were switched off, and Discussions was confirmed off. Issues remain available for bug reports and requests; pull requests and Actions support the review and validation workflow.
 
 ## Official references
 

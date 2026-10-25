@@ -51,6 +51,8 @@ def validate(root: Path) -> tuple[list[str], dict[str, object]]:
             destination = (path.parent / unquote(parts.path)).resolve()
             if not destination.exists():
                 errors.append(f"{path.relative_to(root)}: missing link target {target}")
+            if path.is_relative_to(skill) and not destination.is_relative_to(skill.resolve()):
+                errors.append(f"{path.relative_to(root)}: runtime link escapes the installable skill folder: {target}")
 
     counts: Counter[str] = Counter()
     ids: list[str] = []

@@ -49,21 +49,74 @@ ITWYW는 앱이 어떻게 동작하면 좋을지는 알지만 개발 용어는 �
 
 요청이 모호하면 기술 용어를 잔뜩 나열하는 대신 후보 사이의 차이를 설명합니다. 정지 화면을 순서대로 보여 주어 움직임을 설명하며, 이를 실제로 실행되는 애니메이션으로 제시하지 않습니다. 실행 환경에서 더 명확한 표현을 표시할 수 없을 때는 일반 텍스트로 만든 ASCII 프레임을 대안으로 사용합니다.
 
-## 스킬 사용하기
+## 설치
 
-배포용 스킬 폴더는 **[skills/itwyw](skills/itwyw)**이며, 진입점은 **[SKILL.md](skills/itwyw/SKILL.md)**입니다.
+**[skills/itwyw](skills/itwyw)만 설치하면 됩니다.** 그 안의 `SKILL.md`, `references/`, `agents/`는 함께 유지하세요. 저장소의 README, 평가 자료, CI, 개발용 스크립트는 에이전트의 스킬 폴더에 넣을 필요가 없습니다.
 
-1. 이 저장소를 복제하거나 다운로드합니다.
-2. `references/`와 `agents/`를 포함한 `skills/itwyw` 폴더 전체를 에이전트에서 지원하는 스킬 디렉터리에 복사합니다. 실행 환경마다 스킬 탐색 경로와 호출 구문이 다르므로 해당 환경의 설치 지침을 따르세요.
-3. 이름으로 스킬을 호출할 수 있는 환경에서는 다음과 같이 요청합니다.
+### 한 줄로 설치
 
-   ```text
-   $itwyw 스킬을 사용해 줘. 메뉴를 누르면 오른쪽에서 작은 패널이 밀려 나오게 하고 싶어.
-   ```
+ITWYW를 사용할 프로젝트 폴더에서 다음 명령을 실행하세요. 선택 화면이 나오면 사용하는 코딩 에이전트를 고르면 됩니다.
 
-   또는 자신의 언어로 요청하면서 ITWYW를 명시적으로 언급하세요.
+```bash
+npx skills add HHC225/ITWYW --skill itwyw
+```
 
-이 스킬에는 애플리케이션 서버, 런타임 패키지, API 키, 이미지 생성 서비스가 포함되어 있지 않으며, 이러한 요소를 필요로 하지도 않습니다. 스킬을 읽고 따를 수 있는 에이전트는 필요합니다. 요청한 용어가 참조 자료의 범위를 벗어나거나 특정 제품의 최신 정보를 확인해야 할 때는 웹 탐색이 유용합니다.
+[Vercel Labs skills CLI](https://github.com/vercel-labs/skills)가 저장소 안의 스킬 폴더를 자동으로 찾습니다. 현재 설치 도구에는 **Node.js 22.20 이상**이 필요하며, 이 GitHub 저장소에서 가져오려면 Git도 설치되어 있어야 합니다.
+
+에이전트를 직접 지정할 수도 있습니다.
+
+```bash
+# Codex
+npx skills add HHC225/ITWYW --skill itwyw -a codex
+
+# Claude Code
+npx skills add HHC225/ITWYW --skill itwyw -a claude-code
+
+# 둘 다
+npx skills add HHC225/ITWYW --skill itwyw -a codex claude-code
+```
+
+모든 프로젝트에서 쓰려면 `-g`를 붙이세요. 연결 대신 독립된 폴더로 복사하려면 `--copy`, 설치 도구의 질문을 생략하려면 `-y`를 붙이면 됩니다.
+
+### 클론해서 복사
+
+macOS, Linux, Git Bash에서는 자신의 프로젝트 폴더에서 다음을 실행하세요.
+
+```bash
+git clone --depth 1 https://github.com/HHC225/ITWYW.git
+mkdir -p .agents/skills
+cp -R ITWYW/skills/itwyw .agents/skills/
+```
+
+사용하는 에이전트에 맞는 설치 위치를 선택하세요.
+
+| 에이전트 또는 환경 | 현재 프로젝트에서만 사용 | 모든 프로젝트에서 사용 |
+| --- | --- | --- |
+| Codex / 공용 스킬 경로를 읽는 에이전트 | `.agents/skills/itwyw/` | `~/.agents/skills/itwyw/` |
+| Claude Code | `.claude/skills/itwyw/` | `~/.claude/skills/itwyw/` |
+| 기존 사용자 경로를 쓰는 Codex 환경 | 현재 표준인 `.agents/skills/` 사용 | 해당 환경이 읽는 경우 `~/.codex/skills/itwyw/` |
+
+Claude Code라면 복사 명령의 `.agents/skills`를 `.claude/skills`로 바꾸세요. 새 Codex 설치에는 공식 문서가 안내하는 `.agents/skills`를 권장합니다. **`itwyw` 폴더 전체**를 복사하여 최종 경로가 `<설치 위치>/itwyw/SKILL.md`가 되면 됩니다.
+
+PowerShell, 기존 Codex 사용자 경로, 업데이트, 문제 해결은 [자세한 설치 안내](docs/installation.md)를 참고하세요. 경로와 호출 방식은 공식 [Codex](https://learn.chatgpt.com/docs/build-skills) 및 [Claude Code](https://code.claude.com/docs/en/skills) 문서를 기준으로 안내합니다.
+
+### 사용하기
+
+Codex에서는:
+
+```text
+$itwyw 메뉴를 누르면 오른쪽에서 작은 패널이 나오게 하고 싶어.
+```
+
+Claude Code에서는:
+
+```text
+/itwyw 메뉴를 누르면 오른쪽에서 작은 패널이 나오게 하고 싶어.
+```
+
+또는 편한 언어로 질문하면서 ITWYW를 명시해 주세요. 설치 후 스킬이 보이지 않으면 에이전트를 다시 시작하세요.
+
+스킬 자체에는 애플리케이션 서버, npm 실행 의존성, API 키, 이미지 생성 서비스가 필요하지 않습니다. Node.js와 CLI는 `npx` 설치 방식에만 필요하며, 직접 복사할 때는 Node.js가 없어도 됩니다. 요청한 용어가 참조 자료에 없거나 최신 제품별 확인이 필요한 경우에는 웹 검색이 도움이 됩니다.
 
 ## 참조 자료의 범위
 
