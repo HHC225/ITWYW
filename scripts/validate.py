@@ -120,8 +120,27 @@ def validate(root: Path) -> tuple[list[str], dict[str, object]]:
                 errors.append("Proposed ruleset unexpectedly contains bypass actors.")
             if rules.get("target") != "branch":
                 errors.append("Proposed ruleset must target branches.")
+            pr_rules = [rule for rule in rules.get("rules", []) if rule.get("type") == "pull_request"]
+            if len(pr_rules) != 1 or pr_rules[0].get("parameters", {}).get("require_code_owner_review") is not True:
+                errors.append("Proposed ruleset must require the sole code owner's review.")
+            elif pr_rules[0].get("parameters", {}).get("required_approving_review_count") != 1:
+                errors.append("Proposed ruleset must require one approving review from the sole code owner.")
         except json.JSONDecodeError as exc:
             errors.append(f"Invalid ruleset JSON: {exc}")
+    else:
+        errors.append("Missing proposed ruleset .github/rulesets/main.json.")
+
+    owners_file = root / ".github" / "CODEOWNERS"
+    if not owners_file.is_file():
+        errors.append("Missing .github/CODEOWNERS.")
+    else:
+        owner_rules = [
+            line.split()
+            for line in owners_file.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        ]
+        if owner_rules != [["*", "@HHC225"]]:
+            errors.append("CODEOWNERS must designate only @HHC225 for every path.")
 
     summary = {
         "catalogues": len(catalogues),

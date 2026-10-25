@@ -10,6 +10,7 @@ Maintain ITWYW, an English-language agent skill that helps beginners identify fr
 - Creating or updating files, committing, pushing a working branch, or opening a draft pull request is not permission to merge.
 - **Do not merge a pull request, enable auto-merge, add it to a merge queue, or push directly to `main` without the owner's explicit authorization for that specific action.**
 - Do not approve your own changes or submit an approval using the owner's identity to satisfy a human-review requirement.
+- The sole required reviewer and code owner is `@HHC225`. Preserve `* @HHC225` as the only CODEOWNERS rule and require code-owner approval. Do not add another reviewer or disable that requirement to resolve an author/reviewer identity conflict.
 - Do not bypass, disable, weaken, or delete branch protections, rulesets, required reviews, or required status checks to finish a task. A failed protection check is a blocker to report.
 - Never force-push a protected branch, delete it, or rewrite published history without separate explicit authorization.
 - Preserve the owner's existing work and settings. Do not expand app permissions or create credentials as a workaround.

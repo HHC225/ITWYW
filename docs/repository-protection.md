@@ -14,7 +14,7 @@ The importable configuration is [main.json](../.github/rulesets/main.json). Its 
 | --- | --- |
 | Target the default branch | Apply to `main`, or its successor if the default changes. |
 | Pull request required | Changes go through a PR instead of an ordinary direct push. |
-| One approving review | Another eligible reviewer must approve. |
+| One approving review, with code-owner review required | The sole code owner, `@HHC225`, must approve. Another person's approval cannot replace this. |
 | Dismiss stale approvals | A changed diff needs fresh review. |
 | Approval of the latest reviewable push | The last pusher cannot be the only person approving the latest change. |
 | Resolve review discussions | Unresolved review threads block merging. |
@@ -23,15 +23,15 @@ The importable configuration is [main.json](../.github/rulesets/main.json). Its 
 | No force pushes or deletion | Protect published branch history and the branch itself. |
 | Empty bypass list | No actor is deliberately exempted in this ruleset. |
 
-Code-owner review is **not** additionally required by this proposed ruleset: making the single owner a mandatory approver can deadlock that owner's own PRs. CODEOWNERS still provides review routing when applicable. The independent-review requirement remains.
+**The only required reviewer and code owner is `@HHC225`.** Code-owner review is required, and `.github/CODEOWNERS` contains only `* @HHC225`. Do not add other owners, substitute reviewers, or path-specific overrides. GitHub may still let other people leave comments or reviews according to their access; those approvals cannot satisfy the required owner's approval.
 
 ### Identity limitation
 
 GitHub evaluates authenticated identities. It cannot distinguish a person from an agent acting through the same account or token. A repository administrator can also edit repository rules. Therefore, a ruleset is not proof that an AI using the owner's administration authority can never change policy.
 
-GitHub does not allow authors to approve their own pull requests. With one required approval and no bypass, a repository with only one eligible reviewer needs another trusted reviewer for that person's PRs. Keep this consequence visible before enabling the configuration. Do not add a bypass or a second account automatically to get around it.
+GitHub does not allow authors to approve their own pull requests. A PR opened by an agent authenticated as `HHC225` is also the owner's own PR, so it cannot receive the required owner approval. The latest-push rule also prevents the last pusher from supplying the required approval for that push. Keep these consequences visible before enabling the configuration. Do not add a reviewer, bypass, or account automatically to get around them.
 
-If stronger separation is required, keep an agent on a separate, least-privilege identity without repository-administration authority and preserve the human's approval role. Changing credentials or account permissions requires its own explicit authorization.
+For future agent-authored PRs, use a separately authorized contributor identity without repository-administration authority, while `@HHC225` remains the sole required reviewer. Creating or changing accounts, credentials, or permissions requires its own explicit authorization. Until that separation exists, report the identity conflict instead of weakening review protection.
 
 ## Apply the configuration
 

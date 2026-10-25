@@ -115,6 +115,8 @@ Then exercise the relevant scenarios in [evals/scenarios.md](evals/scenarios.md)
 
 Repository policy files guide cooperating agents. Actual enforcement requires active GitHub branch protection or rulesets. The proposed configuration and its limitations are documented in **[Repository protection](docs/repository-protection.md)**. This README does not claim that a checked-in policy file activates server-side protection.
 
+**The sole required reviewer and code owner is `@HHC225`.** The proposed rules require that owner's approval; another review cannot replace it. GitHub does not allow self-approval, so an agent using the owner's account cannot open a PR that the same account then approves. Future agent contributions need a separately authorized contributor identity, while the owner remains the only required reviewer.
+
 ## Limits
 
 ITWYW helps establish a shared meaning before development. It is not an architecture approval, a security audit, a performance diagnosis, or a working implementation. It does not infer backend internals from a screenshot. It should keep confirmed intent, accept corrections, and stop asking the same question after the user has answered.
