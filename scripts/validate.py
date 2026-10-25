@@ -51,6 +51,8 @@ def validate(root: Path) -> tuple[list[str], dict[str, object]]:
             destination = (path.parent / unquote(parts.path)).resolve()
             if not destination.exists():
                 errors.append(f"{path.relative_to(root)}: missing link target {target}")
+            if path.is_relative_to(skill) and not destination.is_relative_to(skill.resolve()):
+                errors.append(f"{path.relative_to(root)}: runtime link escapes the installable skill folder: {target}")
 
     counts: Counter[str] = Counter()
     ids: list[str] = []
@@ -116,8 +118,9 @@ def validate(root: Path) -> tuple[list[str], dict[str, object]]:
     if rules_file.is_file():
         try:
             rules = json.loads(rules_file.read_text(encoding="utf-8"))
-            if rules.get("bypass_actors"):
-                errors.append("Proposed ruleset unexpectedly contains bypass actors.")
+            expected_bypass = [{"actor_id": 237215883, "actor_type": "User", "bypass_mode": "pull_request"}]
+            if rules.get("bypass_actors") != expected_bypass:
+                errors.append("Ruleset bypass must be limited to HHC225's individual account and pull requests only.")
             if rules.get("target") != "branch":
                 errors.append("Proposed ruleset must target branches.")
             pr_rules = [rule for rule in rules.get("rules", []) if rule.get("type") == "pull_request"]

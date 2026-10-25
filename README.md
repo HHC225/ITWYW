@@ -49,21 +49,74 @@ For a background task, an explanation can stay this small:
 
 For ambiguous requests, the skill explains the difference between candidates instead of burying the user in a technical glossary. A static sequence illustrates motion; it is not presented as a running animation. Plain-text ASCII frames are a fallback when the host cannot render a clearer representation.
 
-## Use the skill
+## Install
 
-The distributable skill folder is **[skills/itwyw](skills/itwyw)**. Its entry point is **[SKILL.md](skills/itwyw/SKILL.md)**.
+**Install only [skills/itwyw](skills/itwyw).** Keep its `SKILL.md`, `references/`, and `agents/` together. The repository's README files, evaluations, CI, and development scripts are not needed in your agent's skill directory.
 
-1. Clone or download this repository.
-2. Copy the complete `skills/itwyw` folder, including `references/` and `agents/`, into a skill directory supported by your agent. Follow that host's installation instructions; discovery paths and invocation syntax differ.
-3. Where named skill invocation is supported, ask:
+### One command
 
-   ```text
-   Use $itwyw. I want a little panel to slide out from the right when I tap the menu.
-   ```
+Run this in the project where you want to use ITWYW, then choose your coding agent if prompted:
 
-   Or ask in your own language and name ITWYW explicitly.
+```bash
+npx skills add HHC225/ITWYW --skill itwyw
+```
 
-No application server, runtime package, API key, or image-generation service is bundled or required by this skill. An agent capable of reading and following skills is required. Browsing is useful when a requested term falls outside the references or needs current product-specific verification.
+The [Vercel Labs skills CLI](https://github.com/vercel-labs/skills) discovers the nested skill folder automatically. Its current release requires **Node.js 22.20+**; Git must also be available for this GitHub source.
+
+To choose the agent directly:
+
+```bash
+# Codex
+npx skills add HHC225/ITWYW --skill itwyw -a codex
+
+# Claude Code
+npx skills add HHC225/ITWYW --skill itwyw -a claude-code
+
+# Both
+npx skills add HHC225/ITWYW --skill itwyw -a codex claude-code
+```
+
+Add `-g` to install for all your projects. Add `--copy` if you prefer independent folders instead of links, and `-y` to skip the installer's questions.
+
+### Clone and copy
+
+For macOS, Linux, or Git Bash, run these from your own project directory:
+
+```bash
+git clone --depth 1 https://github.com/HHC225/ITWYW.git
+mkdir -p .agents/skills
+cp -R ITWYW/skills/itwyw .agents/skills/
+```
+
+Choose the destination for your agent:
+
+| Agent or setup | This project | All your projects |
+| --- | --- | --- |
+| Codex / agents using the shared skills location | `.agents/skills/itwyw/` | `~/.agents/skills/itwyw/` |
+| Claude Code | `.claude/skills/itwyw/` | `~/.claude/skills/itwyw/` |
+| An existing Codex setup using its older user location | Use the current `.agents/skills/` location | `~/.codex/skills/itwyw/`, if your installation uses it |
+
+For Claude Code, replace `.agents/skills` in the copy commands with `.claude/skills`. For a new Codex installation, use the documented `.agents/skills` location. Copy the **`itwyw` folder**, so the result is `<destination>/itwyw/SKILL.md`.
+
+See [Installation details](docs/installation.md) for PowerShell, the older Codex user location, updates, and troubleshooting. Paths and invocation details follow the official [Codex](https://learn.chatgpt.com/docs/build-skills) and [Claude Code](https://code.claude.com/docs/en/skills) documentation.
+
+### Use it
+
+In Codex:
+
+```text
+$itwyw I want a little panel to slide out from the right when I tap the menu.
+```
+
+In Claude Code:
+
+```text
+/itwyw I want a little panel to slide out from the right when I tap the menu.
+```
+
+Or ask in your own language and name ITWYW explicitly. If the skill does not appear, restart the agent after installation.
+
+The skill itself needs no application server, npm runtime dependency, API key, or image-generation service. Node.js and the CLI are needed only for the `npx` installation route; manual copying does not need Node.js. Browsing is useful when a requested term falls outside the references or needs current product-specific verification.
 
 ## Reference coverage
 
@@ -115,7 +168,7 @@ Then exercise the relevant scenarios in [evals/scenarios.md](evals/scenarios.md)
 
 Repository policy files guide cooperating agents. Actual enforcement requires active GitHub branch protection or rulesets. The proposed configuration and its limitations are documented in **[Repository protection](docs/repository-protection.md)**. This README does not claim that a checked-in policy file activates server-side protection.
 
-**The sole required reviewer and code owner is `@HHC225`.** The proposed rules require that owner's approval; another review cannot replace it. GitHub does not allow self-approval, so an agent using the owner's account cannot open a PR that the same account then approves. Future agent contributions need a separately authorized contributor identity, while the owner remains the only required reviewer.
+**`@HHC225` is the sole code owner and required reviewer for other contributors' PRs.** Another person's review cannot replace the owner's approval. Only `@HHC225` has the personal bypass permission to merge a PR without review, including their own PRs. The bypass covers the whole ruleset, including required checks at PR merge, but does not apply to direct pushes. An agent using the owner's account shares that technical permission and must still obtain the owner's explicit instruction for the specific bypass or merge action.
 
 ## Limits
 

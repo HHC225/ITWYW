@@ -49,21 +49,74 @@ ITWYW 是一項 AI 代理技能，適合知道想讓應用程式做什麼、卻�
 
 遇到意思不明確的要求時，技能會解釋候選功能之間的差別，不會用大量技術名詞淹沒使用者。靜態的連續畫面是用來說明動作，不會被當成正在播放的動畫。當執行環境無法呈現更清楚的表示方式時，才以純文字 ASCII 畫格作為替代方案。
 
-## 使用技能
+## 安裝
 
-可供安裝的技能資料夾是 **[skills/itwyw](skills/itwyw)**，入口檔案是 **[SKILL.md](skills/itwyw/SKILL.md)**。
+**只需安裝 [skills/itwyw](skills/itwyw)。** 請將其中的 `SKILL.md`、`references/` 和 `agents/` 保留在一起。代理的技能目錄不需要放入儲存庫中的 README 檔案、評估資料、CI 或開發腳本。
 
-1. 複製或下載此儲存庫。
-2. 將完整的 `skills/itwyw` 資料夾，包括 `references/` 與 `agents/`，複製到代理支援的技能目錄。請遵循該執行環境的安裝指示；技能搜尋路徑與呼叫語法因環境而異。
-3. 如果環境支援透過名稱呼叫技能，可以這樣提出要求：
+### 一行指令安裝
 
-   ```text
-   請使用 $itwyw。我想要點選選單時，有個小面板從右邊滑出來。
-   ```
+在要使用 ITWYW 的專案中執行以下指令；若出現選擇畫面，再選擇使用的程式開發代理：
 
-   也可以用自己的語言提出要求，並明確提到 ITWYW。
+```bash
+npx skills add HHC225/ITWYW --skill itwyw
+```
 
-這項技能不附帶也不需要應用程式伺服器、執行階段套件、API 金鑰或圖片生成服務，但需要能夠讀取並遵循技能指示的代理。如果要求的術語超出參考資料的範圍，或需要查證特定產品的最新資訊，網頁瀏覽就能派上用場。
+[Vercel Labs skills CLI](https://github.com/vercel-labs/skills) 會自動找到儲存庫子目錄中的技能資料夾。目前的版本需要 **Node.js 22.20+**；從這個 GitHub 來源安裝也需要 Git。
+
+若要直接指定代理：
+
+```bash
+# Codex
+npx skills add HHC225/ITWYW --skill itwyw -a codex
+
+# Claude Code
+npx skills add HHC225/ITWYW --skill itwyw -a claude-code
+
+# 兩者都安裝
+npx skills add HHC225/ITWYW --skill itwyw -a codex claude-code
+```
+
+加上 `-g`，即可安裝供所有專案使用。若偏好獨立的資料夾而非連結，請加上 `--copy`；若要略過安裝程式的提問，請加上 `-y`。
+
+### 複製儲存庫並複製技能資料夾
+
+在 macOS、Linux 或 Git Bash 中，請從自己的專案目錄執行以下指令：
+
+```bash
+git clone --depth 1 https://github.com/HHC225/ITWYW.git
+mkdir -p .agents/skills
+cp -R ITWYW/skills/itwyw .agents/skills/
+```
+
+依照使用的代理選擇目的地：
+
+| 代理或環境 | 這個專案 | 所有專案 |
+| --- | --- | --- |
+| Codex / 使用共用技能位置的代理 | `.agents/skills/itwyw/` | `~/.agents/skills/itwyw/` |
+| Claude Code | `.claude/skills/itwyw/` | `~/.claude/skills/itwyw/` |
+| 既有且使用舊版使用者位置的 Codex 環境 | 使用目前的 `.agents/skills/` 位置 | `~/.codex/skills/itwyw/`，僅適用於仍使用此位置的安裝環境 |
+
+使用 Claude Code 時，請將複製指令中的 `.agents/skills` 換成 `.claude/skills`。新安裝的 Codex 請使用官方文件記載的 `.agents/skills` 位置。請複製 **`itwyw` 資料夾**，讓安裝後的路徑為 `<destination>/itwyw/SKILL.md`。
+
+PowerShell、Codex 舊版使用者位置、更新與疑難排解方式，請參閱[安裝詳細說明](docs/installation.md)。路徑與呼叫方式依據 [Codex](https://learn.chatgpt.com/docs/build-skills) 和 [Claude Code](https://code.claude.com/docs/en/skills) 的官方文件。
+
+### 使用方式
+
+在 Codex 中：
+
+```text
+$itwyw 我想要點選選單時，有個小面板從右邊滑出來。
+```
+
+在 Claude Code 中：
+
+```text
+/itwyw 我想要點選選單時，有個小面板從右邊滑出來。
+```
+
+也可以用自己的語言提出要求，並明確提到 ITWYW。如果安裝後找不到技能，請重新啟動代理。
+
+技能本身不需要應用程式伺服器、npm 執行階段相依套件、API 金鑰或圖片生成服務。只有透過 `npx` 安裝時才需要 Node.js 和 CLI；手動複製不需要 Node.js。如果要求的術語超出參考資料的範圍，或需要查證特定產品的最新資訊，網頁瀏覽就能派上用場。
 
 ## 參考資料涵蓋範圍
 
@@ -115,7 +168,7 @@ python3 scripts/validate.py
 
 儲存庫中的政策檔案用來指引願意遵循規則的代理。若要實際強制執行，必須啟用 GitHub 分支保護或規則集。建議設定及其限制記載於**[儲存庫保護](docs/repository-protection.md)**。這份 README 並未宣稱，將政策檔案加入儲存庫就會啟用伺服器端保護。
 
-**唯一的必要審查者與程式碼擁有者是 `@HHC225`。** 建議規則要求這位擁有者核准，其他人的審查無法取代。GitHub 不允許核准自己提出的 PR，因此代理若使用擁有者的帳號建立 PR，同一帳號便無法核准該 PR。日後代理要提出 PR，需使用另外取得授權的貢獻者帳號；唯一的必要審查者仍然是擁有者本人。
+**唯一的程式碼擁有者是 `@HHC225`。其他貢獻者的 PR 必須取得這位擁有者的審查核准。** 其他人的審查無法取代擁有者的核准。只有 `@HHC225` 獲准在合併 PR 時繞過規則，因此可不經審查合併自己的 PR。這項權限涵蓋整個規則集，包括合併時的必要檢查，但不適用於直接推送。使用擁有者帳號的代理在技術上也具有相同權限，但使用繞過權限或執行合併前，仍須取得擁有者對該項操作的明確指示。
 
 ## 限制
 
