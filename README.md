@@ -1,4 +1,4 @@
-# ITWYW
+# ITWYW — AI Agent Skill for Naming Software Features
 
 ### Is This What You Want?
 
@@ -6,7 +6,7 @@
 
 **Describe the feature in your own words. Get its name, a simple explanation, and a quick check that it is what you meant.**
 
-ITWYW is an AI agent skill for people who know what they want an app to do but do not know the development term. It supports frontend interactions, backend behavior, and infrastructure needs. It is especially useful for beginners and people building with AI through natural-language instructions.
+ITWYW (Is This What You Want?) is an **AI agent skill for Claude Code and Codex** that turns plain-language app requests into recognizable **UI/UX patterns, frontend component names, backend features, and infrastructure concepts**. It explains software terminology in everyday language, compares plausible interpretations, and confirms the intended behavior before implementation. It is designed for beginners and developers building software with AI coding agents.
 
 > “When I press the button, something should slide in from the right.”
 >

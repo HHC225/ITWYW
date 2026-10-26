@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ITWYW — AI Agent Skill to Identify Software Feature Names | Claude Code &amp; Codex</title>
+  <meta name="description" content="ITWYW (Is This What You Want?) identifies UI/UX patterns, frontend components, backend features, and infrastructure terms from plain-language app requests. Install the Claude Code or Codex skill.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://hhc225.github.io/ITWYW/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ITWYW — Find the Right Software Feature Name">
+  <meta property="og:description" content="An AI agent skill for Claude Code and Codex that maps plain-language app ideas to clear software feature names.">
+  <meta property="og:url" content="https://hhc225.github.io/ITWYW/">
+  <meta name="theme-color" content="#101820">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "ITWYW",
+    "alternateName": "Is This What You Want?",
+    "description": "AI agent skill that identifies UI/UX patterns, frontend components, backend features and infrastructure concepts from everyday software requirements.",
+    "codeRepository": "https://github.com/HHC225/ITWYW",
+    "url": "https://hhc225.github.io/ITWYW/"
+  }
+  </script>
+  <style>
+    :root{color-scheme:light;--ink:#14212e;--muted:#506171;--line:#dbe3e9;--accent:#0a607c;--bg:#f8fafc}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .wrap{max-width:900px;margin:auto;padding:36px 24px 72px}header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--line)}
+    .brand{font-weight:800;letter-spacing:.03em;font-size:1.3rem}.links{display:flex;flex-wrap:wrap;gap:14px}a{color:var(--accent);text-underline-offset:3px}
+    h1{font-size:clamp(2rem,4.9vw,3.35rem);line-height:1.18;letter-spacing:-.035em;margin:52px 0 20px;max-width:790px}
+    h2{font-size:1.45rem;line-height:1.35;margin-top:44px}p{max-width:750px}.lead{font-size:1.16rem;color:var(--muted)}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 36px}.button{display:inline-block;padding:11px 18px;border:1px solid var(--accent);border-radius:9px;font-weight:650;text-decoration:none}
+    .button.primary{background:var(--accent);color:#fff}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+    pre{overflow:auto;border:1px solid var(--line);background:#fff;border-radius:10px;padding:18px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.grid article{border:1px solid var(--line);border-radius:10px;background:#fff;padding:16px}
+    .grid h3{margin:0 0 8px;font-size:1.04rem}.grid p{margin:0;color:var(--muted)}
+    blockquote{border-left:4px solid var(--accent);margin:26px 0;padding:10px 20px;background:#fff}
+    footer{border-top:1px solid var(--line);margin-top:60px;padding-top:24px;color:var(--muted);font-size:.93rem}
+    @media(max-width:640px){.grid{grid-template-columns:1fr}.wrap{padding:18px 18px 48px}h1{margin-top:36px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">ITWYW <span aria-hidden="true">·</span> Is This What You Want?</div>
+      <nav class="links" aria-label="Project links">
+        <a href="https://github.com/HHC225/ITWYW">GitHub repository</a>
+        <a href="https://github.com/HHC225/ITWYW/blob/main/README.ko.md" lang="ko">한국어</a>
+        <a href="https://github.com/HHC225/ITWYW/blob/main/README.ja.md" lang="ja">日本語</a>
+        <a href="https://github.com/HHC225/ITWYW/blob/main/README.zh-TW.md" lang="zh-Hant">繁體中文</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Describe the software feature you want. ITWYW helps you find its name.</h1>
+      <p class="lead">ITWYW is an AI agent skill for <strong>Claude Code and Codex</strong>. It translates everyday descriptions of app behavior into recognizable UI/UX patterns, frontend components, backend features, and infrastructure concepts—then confirms what you mean.</p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/HHC225/ITWYW">Explore the GitHub project</a>
+        <a class="button" href="https://github.com/HHC225/ITWYW/blob/main/docs/installation.md">Installation instructions</a>
+      </div>
+      <h2>What does ITWYW do?</h2>
+      <div class="grid">
+        <article><h3>Frontend &amp; UI/UX</h3><p>Find familiar names for interactions and components such as drawers, accordions, toasts, and sticky headers.</p></article>
+        <article><h3>Backend features</h3><p>Describe application behavior and identify concepts such as idempotency, authorization, and background jobs.</p></article>
+        <article><h3>Infrastructure</h3><p>Clarify requirements involving failover, hosting, networking, backups, and monitoring.</p></article>
+      </div>
+      <h2>From a description to a feature name</h2>
+      <blockquote>
+        <p>“When I press the menu button, something should slide in from the right.”</p>
+        <p><strong>Likely feature:</strong> Drawer (side panel). ITWYW explains the behavior and asks whether that matches the intended result.</p>
+      </blockquote>
+      <h2>Install the ITWYW agent skill</h2>
+      <p>Install the <a href="https://github.com/HHC225/ITWYW/tree/main/skills/itwyw">itwyw skill</a> in a coding project using the skills CLI:</p>
+      <pre><code>npx skills add HHC225/ITWYW --skill itwyw</code></pre>
+      <p>Alternatively, copy <code>skills/itwyw</code> into <code>.claude/skills/</code> for Claude Code or <code>.agents/skills/</code> for Codex. The skill files must remain together. See the README for supported paths and CLI prerequisites.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What does ITWYW stand for?</h3>
+      <p>ITWYW stands for <strong>Is This What You Want?</strong> The skill checks that a suggested development concept actually matches the user's intention.</p>
+      <h3>Can ITWYW tell me what a UI component or animation is called?</h3>
+      <p>It can suggest names for described frontend components and interaction patterns. If several features fit, it compares up to three possibilities and asks for confirmation.</p>
+      <h3>Does ITWYW build the app for me?</h3>
+      <p>ITWYW identifies and explains a requested feature before implementation; it is not an application generator or an architecture approval system.</p>
+    </main>
+    <footer>
+      <p>ITWYW project by <a href="https://github.com/HHC225">HHC225</a> · <a href="https://github.com/HHC225/ITWYW/blob/main/README.md">English README</a> · <a href="https://github.com/HHC225/ITWYW">Source repository</a></p>
+    </footer>
+  </div>
+</body>
+</html>
